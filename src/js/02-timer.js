@@ -22,8 +22,9 @@ const options = {
 
     if (deltaDate < 0) {
       Notiflix.Notify.failure('Please choose a date in the future');
+    } else {
+      disabledStart(false);
     }
-    btnStartEl.disabled = false;
   },
 };
 const fp = flatpickr(inputEl, options);
@@ -31,7 +32,7 @@ const fp = flatpickr(inputEl, options);
 const BACKGROUND_COLOR_DELAY = 1000;
 let intervalId = null;
 
-btnStartEl.disabled = true;
+disabledStart(true);
 
 btnStartEl.addEventListener('click', onBtnStartClick);
 
@@ -41,7 +42,7 @@ function onBtnStartClick(e) {
     const selectedTime = fp.selectedDates[0];
     const deltaTime = selectedTime - currentTime;
 
-    btnStartEl.disabled = true;
+    disabledStart(true);
 
     if (deltaTime < 0) {
       clearInterval(intervalId);
@@ -49,6 +50,10 @@ function onBtnStartClick(e) {
     }
     updateClockFace(convertMs(deltaTime));
   }, BACKGROUND_COLOR_DELAY);
+}
+
+function disabledStart(params) {
+  btnStartEl.disabled = params;
 }
 
 function updateClockFace({ days, hours, minutes, seconds }) {
