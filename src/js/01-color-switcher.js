@@ -8,10 +8,10 @@ btnStartEl.addEventListener('click', onBtnStartClick);
 btnStopEl.addEventListener('click', onBtnStopClick);
 
 function onBtnStartClick(e) {
-  intervalId = setInterval(() => {
-    btnStartEl.disabled = true;
-    btnStopEl.disabled = false;
+  disabledStart(true);
+  disabledStop(false);
 
+  intervalId = setInterval(() => {
     const randomHexColor = getRandomHexColor();
 
     bodyEl.style.backgroundColor = randomHexColor;
@@ -19,10 +19,18 @@ function onBtnStartClick(e) {
 }
 
 function onBtnStopClick() {
-  btnStopEl.disabled = true;
-  btnStartEl.disabled = false;
+  disabledStop(true);
+  disabledStart(false);
 
   clearInterval(intervalId);
+}
+
+function disabledStart(params) {
+  btnStartEl.disabled = params;
+}
+
+function disabledStop(params) {
+  btnStopEl.disabled = params;
 }
 
 function getRandomHexColor() {
